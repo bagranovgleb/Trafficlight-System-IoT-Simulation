@@ -40,10 +40,12 @@ In Git Bash:  ```docker-compose up --build```
 
 Step 3:
 When everything is fine you will see this text:
-```text
+
+```
 Flask app running on http://0.0.0.0:5000
 Connected to Neo4j
-MQTT connected on port 1883```
+MQTT connected on port 1883
+```
 
 
 Step 4:
@@ -68,7 +70,7 @@ ______________________________________________
 
 ## 🧱 System Architecture
 
-``` <pre>
+```
 C:.
 │   docker-compose.yml
 │   Plan.png
@@ -143,4 +145,4 @@ C:.
     │
     └───__pycache__
             config.cpython-310.pyc
-</pre>```
+```
