@@ -21,7 +21,7 @@ ______________________________________________
 ## 📒 Instructions to start through Docker
 
 ----------------------------------------------
-#❗ Make sure you have these installed:
+# ❗ Make sure you have these installed:
 
 Docker Desktop
 Docker Compose
@@ -50,7 +50,7 @@ Step 4:
 Go to ```http://localhost:5000```
 
 
-🧰 To stop Docker use: ```docker-compose down```
+>🧰 To stop Docker use: ```docker-compose down```
 
 ______________________________________________
 
@@ -68,7 +68,7 @@ ______________________________________________
 
 ## 🧱 System Architecture
 
-```
+``` <pre>
 C:.
 │   docker-compose.yml
 │   Plan.png
@@ -143,4 +143,4 @@ C:.
     │
     └───__pycache__
             config.cpython-310.pyc
-```
+</pre>```
