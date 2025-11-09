@@ -1,0 +1,150 @@
+
+services:
+  # MySQL
+  mysql:
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass123
+      MYSQL_DATABASE: smarttrafficlight
+      MYSQL_USER: dartwind
+      MYSQL_PASSWORD: cisterntheBasilica1
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpass123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Neo4j
+  neo4j:
+    image: neo4j:latest
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: neo4j/05092004
+    volumes:
+      - neo4j-data:/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "neo4j-admin server status || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - backend
+
+  mqtt:
+    image: eclipse-mosquitto:2.0
+    container_name: mqtt
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    networks:
+      - backend
+    restart: unless-stopped
+
+  web:
+    build: ./app
+    ports:
+      - "5000:5000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      mongo:
+        condition: service_started
+      neo4j:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - backend
+
+  mqtt_handler:
+    build:
+      context: ./mqtt_handler
+    working_dir: /app
+    command: python mqtt_handler.py
+    depends_on:
+      mqtt:
+        condition: service_started
+      mysql:
+        condition: service_healthy
+      mongo:
+        condition: service_started
+      neo4j:
+        condition: service_healthy
+    networks:
+      - backend
+    restart: unless-stopped
+
+  mqtt_simulator:
+    build: ./mqtt_simulator
+    depends_on:
+      mqtt:
+        condition: service_started
+    networks:
+      - backend
+    restart: "no"
+
+  neo4j_populator:
+    build:
+      context: ./neo4j_populator
+    volumes:
+      - ./neo4j_populator:/app
+    working_dir: /app
+    command: python populate_neo4j.py
+    depends_on:
+      mysql_populator:
+        condition: service_completed_successfully
+      neo4j:
+        condition: service_healthy
+    networks:
+      - backend
+    restart: unless-stopped
+
+  mysql_populator:
+    build:
+      context: ./mysql_populator
+    volumes:
+      - ./mysql_populator:/app
+    working_dir: /app
+    command: python populate_mysql.py
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - backend
+    restart: "no"
+
+  mqtt_client:
+    image: eclipse-mosquitto:2.0
+    entrypoint: [ "tail", "-f", "/dev/null" ]
+    depends_on:
+      - mqtt
+    networks:
+      - backend
+
+volumes:
+  mysql-data:
+  mongo-data:
+  neo4j-data:
+
+networks:
+  backend:

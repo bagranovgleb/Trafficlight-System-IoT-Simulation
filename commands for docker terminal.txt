@@ -1,0 +1,19 @@
+docker ps    -  all containers
+
+docker-compose up -d
+
+docker-compose build --no-cache
+docker-compose up
+
+docker compose down -v    -  Stop the containers
+
+
+docker exec -it database2project-mysql-1 mysql -u dartwind -pcisterntheBasilica1
+USE smarttrafficlight;                         acess to sql shell
+SELECT * FROM trafficlights;
+
+docker exec -it database2project-mongo-1 mongosh
+
+use traffic_data
+db.sensor_readings.find()
+http://localhost:5000/
