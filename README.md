@@ -21,7 +21,7 @@ ______________________________________________
 ## 📒 Instructions to start through Docker
 
 ----------------------------------------------
-# ❗ Make sure you have these installed:
+### ❗ Make sure you have these installed:
 
 Docker Desktop
 Docker Compose
