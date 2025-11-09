@@ -20,14 +20,14 @@ ______________________________________________
 
 ## 📒 Instructions to start through Docker
 
-----------------------------------------------
+
 ### ❗ Make sure you have these installed:
 
 Docker Desktop
 Docker Compose
 A terminal or Git Bash
 
-----------------------------------------------
+
 
 
 Step 1:
