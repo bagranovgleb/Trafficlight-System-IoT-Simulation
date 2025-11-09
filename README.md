@@ -1,60 +1,65 @@
 ## 🚦 Smart Traffic Management System
 
 A **Smart Traffic Management System** designed to monitor traffic lights using real-time simulated IoT data.  
-This project integrates **Flask**, **MQTT**, **MySQL**, **MongoDB**, and **Neo4j** inside a **Docker-based microservice environment**.
+This project integrates **Flask**, **MQTT**, **MySQL**, **MongoDB**, and **Neo4j** inside a **Docker-based microservice environment**.      <br>
 
-______________________________________________
+______________________________________________      <br><br>
 
-## 👓 Overview
+## 👓 Overview     <br><br>
 
 This system simulates IoT-based traffic sensors that send vehicle data through MQTT.  
-The received data is processed and stored across different databases:
+The received data is processed and stored across different databases:<br><br>
 
 - **MySQL** – stores structured traffic light and intersection metadata  
 - **MongoDB** – stores real-time and historical traffic sensor data  
 - **Neo4j** – maintains graph-based relationships between intersections and updates traffic light states  
 - **MQTT Broker** – manages IoT data exchange  
-- **Flask Web App** – displays live traffic light statuses and system insights
+- **Flask Web App** – displays live traffic light statuses and system insights     <br><br>
 
-______________________________________________
+______________________________________________  <br><br>
 
-## 📒 Instructions to start through Docker
+## 📒 Instructions to start through Docker   <br><br>
 
 
 ### ❗ Make sure you have these installed:
 
 Docker Desktop
 Docker Compose
-A terminal or Git Bash
+A terminal or Git Bash     <br><br>
 
 
 
 
 Step 1:
-Use Git Bash to cd in smart_traffic_system folder
+Use Git Bash to cd in smart_traffic_system folder  
 
+<br><br>
 
 Step 2:
-In Git Bash:  ```docker-compose up --build```
+In Git Bash:  ```docker-compose up --build```  
 
+<br><br>
 
 Step 3:
-When everything is fine you will see this text:
+When everything is fine you will see this text:     
 
 ```
 Flask app running on http://0.0.0.0:5000
 Connected to Neo4j
 MQTT connected on port 1883
 ```
-
+<br><br>
 
 Step 4:
 Go to ```http://localhost:5000```
 
+<br><br>
 
->🧰 To stop Docker use: ```docker-compose down```
+>🧰 To stop Docker use: ```docker-compose down``` <br><br>
 
 ______________________________________________
+
+<br><br>
 
 ##🔌 Ports
 
@@ -66,7 +71,10 @@ ______________________________________________
 | MongoDB       | `27017`      | Traffic sensor data |
 | Neo4j Browser | `7474`       | Graph visualization |
 
+<br><br>
 ______________________________________________
+
+<br><br>
 
 ## 🧱 System Architecture
 
